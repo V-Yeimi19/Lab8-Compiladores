@@ -214,13 +214,14 @@ Body* Parser::parseBody() {
                check(Token::ENDFUN)    || check(Token::ELSE)     ||
                check(Token::ENDDO)     || check(Token::ENDSWITCH)||
                check(Token::CASE)      || check(Token::DEFAULT)  ||
+               check(Token::DOWHILE)   ||
                isAtEnd();
     };
 
     auto isStmStart = [&]() {
         return check(Token::ID)      || check(Token::PRINT)    ||
                check(Token::RETURN)  || check(Token::IF)       ||
-               check(Token::WHILE)   || check(Token::DOWHILE)  ||
+               check(Token::WHILE)   || check(Token::DO)       ||
                check(Token::BREAK)   || check(Token::SWITCH);
     };
 
@@ -314,14 +315,18 @@ Stm* Parser::parseStm() {
         return new WhileStm(cond, b);
     }
 
-    // ---- DoWhile: 'dowhile' Body 'enddo' CE ----
-    if (match(Token::DOWHILE)) {
+    // ---- DoWhile: 'do' Body 'dowhile' CE 'enddo' ----
+    if (match(Token::DO)) {
         Body* b = parseBody();
 
-        if (!match(Token::ENDDO))
-            error("'enddo' para cerrar el bloque 'dowhile'");
+        if (!match(Token::DOWHILE))
+            error("'dowhile' después del cuerpo del bloque 'do'");
 
         Exp* cond = parseCE();
+
+        if (!match(Token::ENDDO))
+            error("'enddo' para cerrar el bloque 'do'");
+
         return new DoWhileStm(b, cond);
     }
 
@@ -342,16 +347,12 @@ Stm* Parser::parseStm() {
                 error("número entero después de 'case'");
             match(Token::NUM);
             int val = std::stoi(previous->text);
-            if (!match(Token::COLON))
-                error("':' después del valor del 'case'");
             Body* b = parseBody();
             sw->cases.push_back({val, b});
         }
 
         // Parsear default opcional
         if (match(Token::DEFAULT)) {
-            if (!match(Token::COLON))
-                error("':' después de 'default'");
             sw->defaultBody = parseBody();
         }
 
