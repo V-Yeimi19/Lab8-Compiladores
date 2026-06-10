@@ -22,6 +22,8 @@ std::string Exp::binopToChar(BinaryOp op) {
         case GT_OP:    return ">";
         case GEQ_OP:   return ">=";
         case LEQ_OP:   return "<=";
+        case EQ_OP:    return "==";
+        case NEQ_OP:   return "!=";
         case AND_OP:   return "and";
         case OR_OP:    return "or";
         default:       return "?";

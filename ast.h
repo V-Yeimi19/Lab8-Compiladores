@@ -52,6 +52,8 @@ enum BinaryOp {
     GT_OP,      // >
     GEQ_OP,     // >=
     LEQ_OP,     // <=
+    EQ_OP,      // ==
+    NEQ_OP,     // !=
     AND_OP,     // and
     OR_OP       // or
 };

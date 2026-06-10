@@ -370,16 +370,18 @@ Stm* Parser::parseStm() {
 // Reglas de expresiones (precedencia ascendente)
 // =============================================================================
 
-// RE → BE (('<' | '>' | '>=' | '<=') BE)?
+// RE → BE (('<' | '>' | '>=' | '<=' | '==' | '!=') BE)?
 Exp* Parser::parseRE() {
     Exp* l = parseBE();
-    if (match(Token::LE) || match(Token::GT) || match(Token::GEQ) || match(Token::LEQ)) {
+    if (match(Token::LE) || match(Token::GT) || match(Token::GEQ) || match(Token::LEQ) || match(Token::EQ) || match(Token::NEQ)) {
         BinaryOp op;
         switch (previous->type) {
             case Token::LE:  op = LE_OP;  break;
             case Token::GT:  op = GT_OP;  break;
             case Token::GEQ: op = GEQ_OP; break;
             case Token::LEQ: op = LEQ_OP; break;
+            case Token::EQ:  op = EQ_OP;  break;
+            case Token::NEQ: op = NEQ_OP; break;
             default:         op = LE_OP;  break;
         }
         Exp* r = parseBE();

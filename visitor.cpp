@@ -447,6 +447,18 @@ int GenCodeVisitor::visit(BinaryExp* exp) {
             out << " movzbq %cl, %rcx\n";
             out << " orq %rcx, %rax\n";
             break;
+        case EQ_OP:
+            out << " cmpq %rcx, %rax\n";
+            out << " movq $0, %rax\n";
+            out << " sete %al\n";
+            out << " movzbq %al, %rax\n";
+            break;
+        case NEQ_OP:
+            out << " cmpq %rcx, %rax\n";
+            out << " movq $0, %rax\n";
+            out << " setne %al\n";
+            out << " movzbq %al, %rax\n";
+            break;
     }
     return 0;
 }

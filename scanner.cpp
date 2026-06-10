@@ -98,7 +98,6 @@ Token* Scanner::nextToken() {
             case '/': token = new Token(Token::DIV,    c); break;
             case '(': token = new Token(Token::LPAREN, c); break;
             case ')': token = new Token(Token::RPAREN, c); break;
-            case '=': token = new Token(Token::ASSIGN, c); break;
             case ';': token = new Token(Token::SEMICOL,c); break;
             case ',': token = new Token(Token::COMA,   c); break;
             case ':': token = new Token(Token::COLON,  c); break;
@@ -139,6 +138,22 @@ Token* Scanner::nextToken() {
                 if (current + 1 < input.length() && input[current + 1] == '|') {
                     current++;
                     token = new Token(Token::OR, input, first, current + 1 - first);
+                } else {
+                    token = new Token(Token::ERR, c);
+                }
+                break;
+            case '=':
+                if (current + 1 < input.length() && input[current + 1] == '=') {
+                    current++;
+                    token = new Token(Token::EQ, input, first, current + 1 - first);
+                } else {
+                    token = new Token(Token::ASSIGN, c);
+                }
+                break;
+            case '!':
+                if (current + 1 < input.length() && input[current + 1] == '=') {
+                    current++;
+                    token = new Token(Token::NEQ, input, first, current + 1 - first);
                 } else {
                     token = new Token(Token::ERR, c);
                 }

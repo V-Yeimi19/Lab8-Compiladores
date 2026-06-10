@@ -37,6 +37,8 @@ std::string Token::typeName(Type t) {
         case GT:       return "'>'";
         case GEQ:      return "'>='";
         case LEQ:      return "'<='";
+        case EQ:       return "'=='";
+        case NEQ:      return "'!='";
         case AND:      return "'and'";
         case OR:       return "'or'";
         case NOT:      return "'not'";
@@ -121,6 +123,8 @@ std::ostream& operator<<(std::ostream& outs, const Token& tok) {
         case Token::ENDFUN:   outs << "TOKEN(ENDFUN, \""   << tok.text << "\")"; break;
         case Token::RETURN:   outs << "TOKEN(RETURN, \""   << tok.text << "\")"; break;
         case Token::ERR:      outs << "TOKEN(ERR, \""      << tok.text << "\")"; break;
+        case Token::EQ:       outs << "TOKEN(EQ, \"" << tok.text << "\")"; break;
+        case Token::NEQ:      outs << "TOKEN(NEQ, \"" << tok.text << "\")"; break;
         case Token::END:      outs << "TOKEN(END)";                               break;
     }
     return outs;

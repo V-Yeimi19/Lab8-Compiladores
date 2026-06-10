@@ -35,6 +35,9 @@ public:
         GT,         // >
         GEQ,        // >=
         LEQ,        // <=
+        EQ,         // ==
+        NEQ,        // !=
+        
 
         // Operadores lógicos
         AND,        // and
