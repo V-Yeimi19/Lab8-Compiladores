@@ -18,7 +18,7 @@ while_0:
  popq %rax
  cmpq %rcx, %rax
  movq $0, %rax
- setle %al
+ setg %al
  movzbq %al, %rax
  cmpq $0, %rax
  je endwhile_0
@@ -32,7 +32,7 @@ while_1:
  popq %rax
  cmpq %rcx, %rax
  movq $0, %rax
- setle %al
+ setg %al
  movzbq %al, %rax
  cmpq $0, %rax
  je endwhile_1

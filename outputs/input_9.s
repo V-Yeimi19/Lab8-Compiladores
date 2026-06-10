@@ -23,7 +23,7 @@ main:
  popq %rax
  cmpq %rcx, %rax
  movq $0, %rax
- setle %al
+ setg %al
  movzbq %al, %rax
  cmpq $0, %rax
  je else_0
@@ -34,7 +34,7 @@ main:
  popq %rax
  cmpq %rcx, %rax
  movq $0, %rax
- setle %al
+ setg %al
  movzbq %al, %rax
  cmpq $0, %rax
  je else_1
@@ -45,7 +45,7 @@ main:
  popq %rax
  cmpq %rcx, %rax
  movq $0, %rax
- setle %al
+ setg %al
  movzbq %al, %rax
  cmpq $0, %rax
  je else_2
@@ -70,7 +70,7 @@ endif_0:
  popq %rax
  cmpq %rcx, %rax
  movq $0, %rax
- setle %al
+ setg %al
  movzbq %al, %rax
  pushq %rax
  movq -16(%rbp), %rax
@@ -80,7 +80,7 @@ endif_0:
  popq %rax
  cmpq %rcx, %rax
  movq $0, %rax
- setle %al
+ setg %al
  movzbq %al, %rax
  movq %rax, %rcx
  popq %rax
