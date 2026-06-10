@@ -72,7 +72,7 @@ main:
  popq %rax
  cmpq %rcx, %rax
  movq $0, %rax
- setle %al
+ setl %al
  movzbq %al, %rax
  pushq %rax
  movq -16(%rbp), %rax

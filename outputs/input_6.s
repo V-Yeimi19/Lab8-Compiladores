@@ -21,7 +21,7 @@ main:
  popq %rax
  cmpq %rcx, %rax
  movq $0, %rax
- setg %al
+ setl %al
  movzbq %al, %rax
  pushq %rax
  movq -16(%rbp), %rax
@@ -31,7 +31,7 @@ main:
  popq %rax
  cmpq %rcx, %rax
  movq $0, %rax
- setg %al
+ setl %al
  movzbq %al, %rax
  movq %rax, %rcx
  popq %rax
@@ -98,7 +98,7 @@ not_end_2:
  popq %rax
  cmpq %rcx, %rax
  movq $0, %rax
- setg %al
+ setl %al
  movzbq %al, %rax
  movq %rax, %rcx
  popq %rax
