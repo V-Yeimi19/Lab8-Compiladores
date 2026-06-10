@@ -10,10 +10,32 @@ main:
  subq $16, %rsp
  movq $1, %rax
  movq %rax, -8(%rbp)
-dowhile_0:
+while_0:
+ movq -8(%rbp), %rax
+ pushq %rax
+ movq $3, %rax
+ movq %rax, %rcx
+ popq %rax
+ cmpq %rcx, %rax
+ movq $0, %rax
+ setle %al
+ movzbq %al, %rax
+ cmpq $0, %rax
+ je endwhile_0
  movq $1, %rax
  movq %rax, -16(%rbp)
-dowhile_1:
+while_1:
+ movq -16(%rbp), %rax
+ pushq %rax
+ movq $3, %rax
+ movq %rax, %rcx
+ popq %rax
+ cmpq %rcx, %rax
+ movq $0, %rax
+ setle %al
+ movzbq %al, %rax
+ cmpq $0, %rax
+ je endwhile_1
  movq -8(%rbp), %rax
  pushq %rax
  movq $10, %rax
@@ -36,17 +58,7 @@ dowhile_1:
  popq %rax
  addq %rcx, %rax
  movq %rax, -16(%rbp)
- movq -16(%rbp), %rax
- pushq %rax
- movq $2, %rax
- movq %rax, %rcx
- popq %rax
- cmpq %rcx, %rax
- movq $0, %rax
- setle %al
- movzbq %al, %rax
- cmpq $0, %rax
- jne dowhile_1
+ jmp while_1
 endwhile_1:
  movq -8(%rbp), %rax
  pushq %rax
@@ -55,17 +67,7 @@ endwhile_1:
  popq %rax
  addq %rcx, %rax
  movq %rax, -8(%rbp)
- movq -8(%rbp), %rax
- pushq %rax
- movq $2, %rax
- movq %rax, %rcx
- popq %rax
- cmpq %rcx, %rax
- movq $0, %rax
- setle %al
- movzbq %al, %rax
- cmpq $0, %rax
- jne dowhile_0
+ jmp while_0
 endwhile_0:
  movq $0, %rax
  jmp .end_main
