@@ -12,11 +12,18 @@ main:
  movq %rax, -8(%rbp)
 dowhile_0:
  movq -8(%rbp), %rax
- pushq %rax
-case_1_0:
- movq (%rsp), %rax
- cmpq $1, %rax
- jne case_1_1
+ movq %rax, %r10
+ movq $1, %rax
+ cmpq %rax, %r10
+ je case_1_1
+ movq $2, %rax
+ cmpq %rax, %r10
+ je case_1_2
+ movq $3, %rax
+ cmpq %rax, %r10
+ je case_1_3
+ jmp default_1
+case_1_1:
  movq $101, %rax
  movq %rax, %rsi
  leaq print_fmt(%rip), %rdi
@@ -24,10 +31,7 @@ case_1_0:
  call printf@PLT
  jmp endswitch_1
  jmp endswitch_1
-case_1_1:
- movq (%rsp), %rax
- cmpq $2, %rax
- jne case_1_2
+case_1_2:
  movq $202, %rax
  movq %rax, %rsi
  leaq print_fmt(%rip), %rdi
@@ -35,10 +39,7 @@ case_1_1:
  call printf@PLT
  jmp endswitch_1
  jmp endswitch_1
-case_1_2:
- movq (%rsp), %rax
- cmpq $3, %rax
- jne default_1
+case_1_3:
  movq $303, %rax
  movq %rax, %rsi
  leaq print_fmt(%rip), %rdi
@@ -53,7 +54,6 @@ default_1:
  movq $0, %rax
  call printf@PLT
 endswitch_1:
- popq %rax
  movq -8(%rbp), %rax
  pushq %rax
  movq $1, %rax
@@ -72,7 +72,7 @@ endswitch_1:
  movzbq %al, %rax
  cmpq $0, %rax
  jne dowhile_0
-enddowhile_0:
+endwhile_0:
  movq $0, %rax
  jmp .end_main
 .end_main:

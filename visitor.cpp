@@ -425,26 +425,9 @@ int GenCodeVisitor::visit(BinaryExp* exp) {
             out << " movzbq %al, %rax\n";
             break;
         case AND_OP:
-            // Normalize left (%rax) to 0/1, then normalize right (%rcx) to 0/1, then AND
-            out << " cmpq $0, %rax\n";
-            out << " movq $0, %rax\n";
-            out << " setne %al\n";
-            out << " movzbq %al, %rax\n";
-            out << " cmpq $0, %rcx\n";
-            out << " movq $0, %rcx\n";
-            out << " setne %cl\n";
-            out << " movzbq %cl, %rcx\n";
             out << " andq %rcx, %rax\n";
             break;
         case OR_OP:
-            out << " cmpq $0, %rax\n";
-            out << " movq $0, %rax\n";
-            out << " setne %al\n";
-            out << " movzbq %al, %rax\n";
-            out << " cmpq $0, %rcx\n";
-            out << " movq $0, %rcx\n";
-            out << " setne %cl\n";
-            out << " movzbq %cl, %rcx\n";
             out << " orq %rcx, %rax\n";
             break;
         case EQ_OP:
@@ -468,11 +451,15 @@ int GenCodeVisitor::visit(BinaryExp* exp) {
 // -----------------------------------------------------------------------------
 
 int GenCodeVisitor::visit(UnaryExp* exp) {
+    int lbl = labelcont++;
     exp->exp->accept(this);
     out << " cmpq $0, %rax\n";
+    out << " je not_true_" << lbl << "\n";
     out << " movq $0, %rax\n";
-    out << " sete %al\n";
-    out << " movzbq %al, %rax\n";
+    out << " jmp not_end_" << lbl << "\n";
+    out << "not_true_" << lbl << ":\n";
+    out << " movq $1, %rax\n";
+    out << "not_end_" << lbl << ":\n";
     return 0;
 }
 
@@ -556,7 +543,7 @@ int GenCodeVisitor::visit(WhileStm* stm) {
 
 int GenCodeVisitor::visit(DoWhileStm* stm) {
     int lbl = labelcont++;
-    std::string endLabel = "enddowhile_" + std::to_string(lbl);
+    std::string endLabel = "endwhile_" + std::to_string(lbl);
     breakLabels.push_back(endLabel);
     out << "dowhile_" << lbl << ":\n";
     stm->b->accept(this);
@@ -662,20 +649,20 @@ int GenCodeVisitor::visit(SwitchStm* stm) {
     std::string endLabel = "endswitch_" + std::to_string(lbl);
     breakLabels.push_back(endLabel);
 
-    // Evaluar condición y guardarla en el stack
+    // Evaluar condición
     stm->condition->accept(this);
-    out << " pushq %rax\n";
+    out << " movq %rax, %r10\n";
 
     int nCases = static_cast<int>(stm->cases.size());
     for (int i = 0; i < nCases; i++) {
-        out << "case_" << lbl << "_" << i << ":\n";
-        out << " movq (%rsp), %rax\n";
-        out << " cmpq $" << stm->cases[i].value << ", %rax\n";
-        // Si no coincide, saltar al siguiente case (o default/endswitch)
-        if (i + 1 < nCases)
-            out << " jne case_" << lbl << "_" << (i + 1) << "\n";
-        else
-            out << " jne default_" << lbl << "\n";
+        out << " movq $" << stm->cases[i].value << ", %rax\n";
+        out << " cmpq %rax, %r10\n";
+        out << " je case_" << lbl << "_" << (i + 1) << "\n";
+    }
+    out << " jmp default_" << lbl << "\n";
+
+    for (int i = 0; i < nCases; i++) {
+        out << "case_" << lbl << "_" << (i + 1) << ":\n";
         stm->cases[i].body->accept(this);
         out << " jmp " << endLabel << "\n";
     }
@@ -685,7 +672,6 @@ int GenCodeVisitor::visit(SwitchStm* stm) {
         stm->defaultBody->accept(this);
 
     out << endLabel << ":\n";
-    out << " popq %rax\n";  // restaurar stack
 
     breakLabels.pop_back();
     return 0;

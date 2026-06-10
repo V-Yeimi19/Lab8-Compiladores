@@ -39,19 +39,14 @@ main:
  sete %al
  movzbq %al, %rax
  cmpq $0, %rax
+ je not_true_1
  movq $0, %rax
- sete %al
- movzbq %al, %rax
+ jmp not_end_1
+not_true_1:
+ movq $1, %rax
+not_end_1:
  movq %rax, %rcx
  popq %rax
- cmpq $0, %rax
- movq $0, %rax
- setne %al
- movzbq %al, %rax
- cmpq $0, %rcx
- movq $0, %rcx
- setne %cl
- movzbq %cl, %rcx
  andq %rcx, %rax
  cmpq $0, %rax
  je else_0
