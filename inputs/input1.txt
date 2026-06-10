@@ -1,0 +1,11 @@
+fun int main()
+    var int a,b;
+    // AQUI PONER TU INPUT // 
+    // CONDICIONES // 
+    // LAS VARIABLES SE DECLARAN EN LA LINEA 2 TODAS // 
+    // DO WHILE // 
+    // BREAK // 
+    // SWITCH //
+    // OPERACIONES LOGICAS Y DE RELACION // NECESITAS MODIFICAR EL PARSER
+    return(0)
+endfun

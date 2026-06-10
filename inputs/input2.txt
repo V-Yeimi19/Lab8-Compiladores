@@ -1,0 +1,13 @@
+fun int main()
+    var int a,b;
+    a = 0;
+    while a < 10 do 
+        b = 0;
+        while b < 10 do
+            print(a+b);
+            b = b + 1
+        endwhile;
+        a = a + 1
+    endwhile;
+    return(0)
+endfun
