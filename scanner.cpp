@@ -101,7 +101,6 @@ Token* Scanner::nextToken() {
             case ';': token = new Token(Token::SEMICOL,c); break;
             case ',': token = new Token(Token::COMA,   c); break;
             case ':': token = new Token(Token::COLON,  c); break;
-            case '!': token = new Token(Token::NOT, c); break;
             case '<':
                 if (current + 1 < input.length() && input[current + 1] == '=') {
                     current++;
@@ -155,7 +154,7 @@ Token* Scanner::nextToken() {
                     current++;
                     token = new Token(Token::NEQ, input, first, current + 1 - first);
                 } else {
-                    token = new Token(Token::ERR, c);
+                    token = new Token(Token::NOT, c);
                 }
                 break;
         }

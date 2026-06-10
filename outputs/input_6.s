@@ -35,6 +35,14 @@ main:
  movzbq %al, %rax
  movq %rax, %rcx
  popq %rax
+ cmpq $0, %rax
+ movq $0, %rax
+ setne %al
+ movzbq %al, %rax
+ cmpq $0, %rcx
+ movq $0, %rcx
+ setne %cl
+ movzbq %cl, %rcx
  andq %rcx, %rax
  pushq %rax
  movq -24(%rbp), %rax
@@ -48,6 +56,14 @@ main:
  movzbq %al, %rax
  movq %rax, %rcx
  popq %rax
+ cmpq $0, %rax
+ movq $0, %rax
+ setne %al
+ movzbq %al, %rax
+ cmpq $0, %rcx
+ movq $0, %rcx
+ setne %cl
+ movzbq %cl, %rcx
  orq %rcx, %rax
  cmpq $0, %rax
  je else_0
@@ -74,12 +90,9 @@ endif_0:
  sete %al
  movzbq %al, %rax
  cmpq $0, %rax
- je not_true_2
  movq $0, %rax
- jmp not_end_2
-not_true_2:
- movq $1, %rax
-not_end_2:
+ sete %al
+ movzbq %al, %rax
  pushq %rax
  movq -16(%rbp), %rax
  pushq %rax
@@ -102,9 +115,25 @@ not_end_2:
  movzbq %al, %rax
  movq %rax, %rcx
  popq %rax
+ cmpq $0, %rax
+ movq $0, %rax
+ setne %al
+ movzbq %al, %rax
+ cmpq $0, %rcx
+ movq $0, %rcx
+ setne %cl
+ movzbq %cl, %rcx
  orq %rcx, %rax
  movq %rax, %rcx
  popq %rax
+ cmpq $0, %rax
+ movq $0, %rax
+ setne %al
+ movzbq %al, %rax
+ cmpq $0, %rcx
+ movq $0, %rcx
+ setne %cl
+ movzbq %cl, %rcx
  andq %rcx, %rax
  cmpq $0, %rax
  je else_1

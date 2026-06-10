@@ -84,6 +84,14 @@ endif_0:
  movzbq %al, %rax
  movq %rax, %rcx
  popq %rax
+ cmpq $0, %rax
+ movq $0, %rax
+ setne %al
+ movzbq %al, %rax
+ cmpq $0, %rcx
+ movq $0, %rcx
+ setne %cl
+ movzbq %cl, %rcx
  andq %rcx, %rax
  cmpq $0, %rax
  je else_3

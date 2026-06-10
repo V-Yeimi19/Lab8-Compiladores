@@ -47,7 +47,7 @@ dowhile_1:
  movzbq %al, %rax
  cmpq $0, %rax
  jne dowhile_1
-endwhile_1:
+enddowhile_1:
  movq -8(%rbp), %rax
  pushq %rax
  movq $1, %rax
@@ -66,7 +66,7 @@ endwhile_1:
  movzbq %al, %rax
  cmpq $0, %rax
  jne dowhile_0
-endwhile_0:
+enddowhile_0:
  movq $0, %rax
  jmp .end_main
 .end_main:
