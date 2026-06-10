@@ -7,6 +7,6 @@ fun int main()
     print((a + b) * c);
     print(a / b);
     print(a * c);
-    print((a < b) || (b <= c) || (a != c));
+    print((a <= b) || (b <= c) || (a != c));
     return(0)
 endfun
