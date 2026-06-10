@@ -90,7 +90,7 @@ Token* Scanner::nextToken() {
     }
 
     // ---- Operadores y delimitadores ----
-    if (strchr("+/-*();=,<>:", c)) {
+    if (strchr("+/-*();=,<>:!&|", c)) {
         Token* token = nullptr;
         switch (c) {
             case '+': token = new Token(Token::PLUS,   c); break;
@@ -102,6 +102,7 @@ Token* Scanner::nextToken() {
             case ';': token = new Token(Token::SEMICOL,c); break;
             case ',': token = new Token(Token::COMA,   c); break;
             case ':': token = new Token(Token::COLON,  c); break;
+            case '!': token = new Token(Token::NOT, c); break;
             case '<':
                 if (current + 1 < input.length() && input[current + 1] == '=') {
                     current++;
@@ -124,6 +125,22 @@ Token* Scanner::nextToken() {
                     token = new Token(Token::POW, input, first, current + 1 - first);
                 } else {
                     token = new Token(Token::MUL, c);
+                }
+                break;
+            case '&':
+                if (current + 1 < input.length() && input[current + 1] == '&') {
+                    current++;
+                    token = new Token(Token::AND, input, first, current + 1 - first);
+                } else {
+                    token = new Token(Token::ERR, c);
+                }
+                break;
+            case '|':
+                if (current + 1 < input.length() && input[current + 1] == '|') {
+                    current++;
+                    token = new Token(Token::OR, input, first, current + 1 - first);
+                } else {
+                    token = new Token(Token::ERR, c);
                 }
                 break;
         }
