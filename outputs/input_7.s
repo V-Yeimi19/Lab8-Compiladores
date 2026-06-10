@@ -3,12 +3,58 @@ print_fmt: .string "%ld \n"
 
 .text
 
-.globl fib
-fib:
+.globl main
+main:
  pushq %rbp
  movq %rsp, %rbp
- subq $8, %rsp
- movq %rdi, -8(%rbp)
+ subq $16, %rsp
+ movq $1, %rax
+ movq %rax, -8(%rbp)
+dowhile_0:
+ movq $1, %rax
+ movq %rax, -16(%rbp)
+dowhile_1:
+ movq -8(%rbp), %rax
+ pushq %rax
+ movq $10, %rax
+ movq %rax, %rcx
+ popq %rax
+ imulq %rcx, %rax
+ pushq %rax
+ movq -16(%rbp), %rax
+ movq %rax, %rcx
+ popq %rax
+ addq %rcx, %rax
+ movq %rax, %rsi
+ leaq print_fmt(%rip), %rdi
+ movq $0, %rax
+ call printf@PLT
+ movq -16(%rbp), %rax
+ pushq %rax
+ movq $1, %rax
+ movq %rax, %rcx
+ popq %rax
+ addq %rcx, %rax
+ movq %rax, -16(%rbp)
+ movq -16(%rbp), %rax
+ pushq %rax
+ movq $2, %rax
+ movq %rax, %rcx
+ popq %rax
+ cmpq %rcx, %rax
+ movq $0, %rax
+ setle %al
+ movzbq %al, %rax
+ cmpq $0, %rax
+ jne dowhile_1
+endwhile_1:
+ movq -8(%rbp), %rax
+ pushq %rax
+ movq $1, %rax
+ movq %rax, %rcx
+ popq %rax
+ addq %rcx, %rax
+ movq %rax, -8(%rbp)
  movq -8(%rbp), %rax
  pushq %rax
  movq $2, %rax
@@ -19,49 +65,8 @@ fib:
  setle %al
  movzbq %al, %rax
  cmpq $0, %rax
- je else_0
- movq -8(%rbp), %rax
- jmp .end_fib
- jmp endif_0
-else_0:
- movq -8(%rbp), %rax
- pushq %rax
- movq $1, %rax
- movq %rax, %rcx
- popq %rax
- subq %rcx, %rax
- movq %rax, %rdi
- call fib
- pushq %rax
- movq -8(%rbp), %rax
- pushq %rax
- movq $2, %rax
- movq %rax, %rcx
- popq %rax
- subq %rcx, %rax
- movq %rax, %rdi
- call fib
- movq %rax, %rcx
- popq %rax
- addq %rcx, %rax
- jmp .end_fib
-endif_0:
-.end_fib:
- leave
- ret
-
-.globl main
-main:
- pushq %rbp
- movq %rsp, %rbp
- subq $0, %rsp
- movq $10, %rax
- movq %rax, %rdi
- call fib
- movq %rax, %rsi
- leaq print_fmt(%rip), %rdi
- movq $0, %rax
- call printf@PLT
+ jne dowhile_0
+endwhile_0:
  movq $0, %rax
  jmp .end_main
 .end_main:

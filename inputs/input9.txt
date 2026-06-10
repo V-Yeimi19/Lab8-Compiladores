@@ -1,13 +1,18 @@
 fun int main()
-    var int a, b, c;
-    a = 3;
-    b = 4;
+    var int a, b, c, d;
+    a = 5;
+    b = 8;
+    c = 10;
+    d = 12;
     if a < b then
-        var int d;
-        d = a + b;
-        print(d)
-    else
-        print(a)
-    endif
+        if b < c then
+            if c < d then
+                print(111)
+            endif
+        endif
+    endif;
+    if (a < c) && (b < d) then
+        print(222)
+    endif;
     return(0)
 endfun

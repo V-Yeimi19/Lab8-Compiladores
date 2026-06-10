@@ -1,11 +1,10 @@
 fun int main()
-    var int a,b;
-    // AQUI PONER TU INPUT // 
-    // CONDICIONES // 
-    // LAS VARIABLES SE DECLARAN EN LA LINEA 2 TODAS // 
-    // DO WHILE // 
-    // BREAK // 
-    // SWITCH //
-    // OPERACIONES LOGICAS Y DE RELACION // NECESITAS MODIFICAR EL PARSER
+    var int x, y, r;
+    x = 10;
+    y = 20;
+    r = x + y;
+    if (r > 15) && !(x == y) then
+        print(r)
+    endif;
     return(0)
 endfun

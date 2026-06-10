@@ -1,12 +1,15 @@
-fun int fib(int n)
-    if n < 2 then
-        return(n)
-    else
-        return(fib(n-1) + fib(n-2))
-    endif
-endfun
-
 fun int main()
-    print(fib(10));
+    var int i, j;
+    i = 1;
+    do
+        j = 1;
+        do
+            print(i * 10 + j);
+            j = j + 1;
+        dowhile j <= 2
+        enddo;
+        i = i + 1;
+    dowhile i <= 2
+    enddo;
     return(0)
 endfun

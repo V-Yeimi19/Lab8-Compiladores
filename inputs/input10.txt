@@ -1,9 +1,25 @@
-fun int cond(int x)
-    if x < 4 then return(0) else return(1) endif
-endfun
-
 fun int main()
-    print(cond(5));
-    print(cond(3));
+    var int i, n, fact;
+    i = 1;
+    do
+        n = i + 2;
+        fact = 1;
+        while n > 1 do
+            fact = fact * n;
+            n = n - 1
+        endwhile;
+        switch i
+        case 1
+            print(fact);
+            break
+        case 2
+            print(fact);
+            break
+        default
+            print(0)
+        endswitch;
+        i = i + 1;
+    dowhile i <= 3
+    enddo;
     return(0)
 endfun

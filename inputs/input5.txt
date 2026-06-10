@@ -1,8 +1,22 @@
-fun int id(int x)
-    return(x)
-endfun
-
 fun int main()
-    print(id(42));
+    var int x;
+    x = 1;
+    do
+        switch x
+        case 1
+            print(101);
+            break
+        case 2
+            print(202);
+            break
+        case 3
+            print(303);
+            break
+        default
+            print(999)
+        endswitch;
+        x = x + 1;
+    dowhile x <= 4
+    enddo;
     return(0)
 endfun

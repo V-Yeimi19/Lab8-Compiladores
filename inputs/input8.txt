@@ -1,8 +1,12 @@
-fun int suma(int a, int b, int c)
-    return(a + b + c)
-endfun
-
 fun int main()
-    print(suma(1,2,3));
+    var int a, b, c;
+    a = 15;
+    b = 4;
+    c = 2;
+    print(a + b * c);
+    print((a + b) * c);
+    print(a / b);
+    print(a * c);
+    print((a < b) || (b <= c) || (a != c));
     return(0)
 endfun

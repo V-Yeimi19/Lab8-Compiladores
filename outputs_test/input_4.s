@@ -3,60 +3,56 @@ print_fmt: .string "%ld \n"
 
 .text
 
-.globl signo
-signo:
- pushq %rbp
- movq %rsp, %rbp
- subq $8, %rsp
- movq %rdi, -8(%rbp)
- movq -8(%rbp), %rax
- pushq %rax
- movq $5, %rax
- movq %rax, %rcx
- popq %rax
- cmpq %rcx, %rax
- movq $0, %rax
- setle %al
- movzbq %al, %rax
- cmpq $0, %rax
- je else_0
- movq $1, %rax
- jmp .end_signo
- jmp endif_0
-else_0:
- movq $0, %rax
- jmp .end_signo
-endif_0:
-.end_signo:
- leave
- ret
-
 .globl main
 main:
  pushq %rbp
  movq %rsp, %rbp
- subq $0, %rsp
+ subq $8, %rsp
+ movq $2, %rax
+ movq %rax, -8(%rbp)
+ movq -8(%rbp), %rax
+ movq %rax, %r10
+ movq $1, %rax
+ cmpq %rax, %r10
+ je case_0_1
+ movq $2, %rax
+ cmpq %rax, %r10
+ je case_0_2
  movq $3, %rax
- movq %rax, %rdi
- call signo
- movq %rax, %rsi
- leaq print_fmt(%rip), %rdi
- movq $0, %rax
- call printf@PLT
- movq $0, %rax
- movq %rax, %rdi
- call signo
- movq %rax, %rsi
- leaq print_fmt(%rip), %rdi
- movq $0, %rax
- call printf@PLT
+ cmpq %rax, %r10
+ je case_0_3
+ jmp default_0
+case_0_1:
  movq $10, %rax
- movq %rax, %rdi
- call signo
  movq %rax, %rsi
  leaq print_fmt(%rip), %rdi
  movq $0, %rax
  call printf@PLT
+ jmp endswitch_0
+ jmp endswitch_0
+case_0_2:
+ movq $20, %rax
+ movq %rax, %rsi
+ leaq print_fmt(%rip), %rdi
+ movq $0, %rax
+ call printf@PLT
+ jmp endswitch_0
+ jmp endswitch_0
+case_0_3:
+ movq $30, %rax
+ movq %rax, %rsi
+ leaq print_fmt(%rip), %rdi
+ movq $0, %rax
+ call printf@PLT
+ jmp endswitch_0
+ jmp endswitch_0
+default_0:
+ movq $99, %rax
+ movq %rax, %rsi
+ leaq print_fmt(%rip), %rdi
+ movq $0, %rax
+ call printf@PLT
+endswitch_0:
  movq $0, %rax
  jmp .end_main
 .end_main:
